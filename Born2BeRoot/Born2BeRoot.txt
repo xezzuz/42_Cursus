@@ -1,0 +1,50 @@
+Born2beRoot
+1. Virtual Machine Installation
+
+2. SUDO
+	I   - INSTALLING SUDO
+
+	II  - ADDING USER TO SUDO GROUP:		# usermod -aG sudo nazouz
+		- CHEKING IF nazouz IS IN sudo:		# getent group sudo
+
+	III - CONFIGURING SUDO
+			path: /etc/sudoers.d/sudo.config
+				PASSWORD
+											# Defaults        passwd_tries=3
+											# Defaults        badpass_message=""
+				LOGS
+											# Defaults        logfile="/var/log/sudo/sudo.log"
+											# Defaults        log_input,log_output
+											# Defaults        iolog_dir="/var/log/sudo"
+				TTY
+											# Defaults		  requiretty
+				SECURE PATHS
+											# Defaults		  secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+3. SSH
+	I 	- CONFIGURING SSH
+			sudo vim /etc/ssh/sshd_config
+			Port 4242
+			PermitRootLogin no
+
+4. UFW (UNCOMPLICATED FIREWALL)
+	I 	- ENABLE FIREWALL
+			sudo ufw enable
+	II	- ALLOW PORT 4242
+			sudo ufw allow 4242
+
+5. USER MANAGEMENT
+	I	- PASSWORD POLICY
+			PASSWORD AGE POLICY:	/etc/login.defs
+			PASSWORD STRENGTH:		/etc/pam.d/common-password
+	II	- USER MANAGEMEMT
+			CREATE USER:			sudo adduser <username>
+			CHECK IF WAS CREATED:	sudo chage -l <username>
+			CREATE GROUP:			sudo addgroup <group-name>
+			ADD USER TO GROUP:		sudo usermod -aG <group-name> <username>
+			CHECK IF WAS ADDED:		sudo getent group <group-name>
+
+6. BROADCAST MESSAGE (CRONTAB)
+	I	- CONFIGURE CRONTAB
+			PATH:					sudo crontab -u root -e
+			CONFIG:					*/10 * * * * sh /path/to/script
+			CHECK SCHEDULE:			sudo crontab -u root -l
